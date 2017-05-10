@@ -1,0 +1,144 @@
+%%% À compiler *deux fois* en utilisant *lualatex* 
+%%% La fonte Arial doit être installée sur le système
+\documentclass{success_stories}
+
+% Méta-données, ne sont pas affichées dans le document
+\MetaData{
+    author={Lejay, Antoine},
+    date={2016-02-16},
+    keywords={Linear programming},
+}
+
+\usepackage{Arial}
+
+\begin{document}
+
+% Titre, résumé en une ligne, secteur H2020, 
+\Setup{
+    name=SIVIBIR++ Simulation of a bioreactor,
+    oneline=Simulation of a virtual bioreactor landfill using Feel++ framework,
+    h2020={Secure, clean and efficient energy},
+    sector=ENERGY ENVIRONMENT
+}
+
+%%% Les challenges H2020
+%    Health, demographic change and wellbeing;
+%    Food security, sustainable agriculture and forestry, marine and maritime and inland water research, and the Bioeconomy;
+%    Secure, clean and efficient energy;
+%    Smart, green and integrated transport;
+%    Climate action, environment, resource efficiency and raw materials;
+%    Europe in a changing world - inclusive, innovative and reflective societies;
+%    Secure societies - protecting freedom and security of Europe and its citizens.
+
+% Description du partenaire académique
+\Setup{academic/.cd,
+    name=cemosis,
+    logo=Figures/logos/logoCemosis.pdf,
+    description={Cemosis is hosted by the Institute of Advanced Mathematical
+        Research (IRMA) and was created in January 2013. Cemosis mainly relies
+        currently on the team Modeling and Control of the IRMA}
+}
+
+% Description du partenaire industriel
+\Setup{industrial/.cd,
+    name=Optit,
+    logo=Figures/logos/logoCharier.jpg,
+    description = {
+        The Charier company concentrates on five businesses: Aggregates, Earthworks, Roads and Urban Works, Civil Engineering and Special Works, Waste Recovery.
+    }
+}
+
+% Illustration
+\Setup{illustration/img={Figures/pngs/sivibir++/sivibirpp.png},
+    illustration/height=4cm
+}
+
+% Description mathématique (1ère page)
+\Setup{math description={
+%The research group developed SPRINT a decision support system based on two elements:
+%\begin{bullets}
+%    \item A forecasting tool to predict the arrival of users at contact centers based on hystorical data;
+%    \item An optimization framework to schedule dynamically the required staff for the given demand.
+%\end{bullets}
+%The optimization module has been tailored to company's needs and is composed of three
+%stages. In the first stage, an adaptive staffing mechanism determines an approximate
+%required staff for each time slot given the forecast of the demand to be served. 
+%Then, an integer Linear Program calls for minimizing the resources required while respecting
+%adaptive staffing and opening/closing rules. Finally, SPRINT evaluates the proposed optimal 
+%schedule and proceeds in an interate adaptive fashion till an overall satisfactory
+%solution is found.
+        A complex model involving seven equations to modelize the chemical
+        reactions inside the bioreactor has been proposed. The model
+        has been implemented using Feel++ a finite element library using
+        Galerkin Methods.
+}}
+
+% Description du problème et du contexte
+\Setup{problem description={
+    The principle of a bioreactor landfill consists in accelerating
+    biodegradation of wastes. Maintaining an optimal degree of humidity, in
+    particular fostering leachates recirculation helps to achieve this goal.
+    The chemical reaction produces gaz which is reprocessed in another form of
+    energy (heat, electricity, …).
+    }}
+
+% But de la collaboration
+\Setup{goal={
+        The goal of this project is to modelize the chemical reaction occuring
+        inside a real bioreactor, then to generalize the whole bioreactor
+        operating system. The final goal is to control the gaz production in
+        order to optimize bioreactor yield in function of the energy needs.
+%\begin{bullets}
+%    \item Reduce the maximum and average waiting time while maintaining a high service quality at Front Office
+%    \item Reduce of resource requirements even with increase in demand rate 
+%    \item Improve assignments of Back Office and sales tasks
+%\end{bullets}
+    }}
+
+% Résultat (2ème page)
+\Setup{results={
+        A multiphasic model has been established during a math-entreprise
+        studying week “Semaine d’Étude Math-Entreprise” (SEME). A C++
+        implementation of the model has been proposed during the “Centre d’Été
+        Mathématique de Recherche Avancée en Calcul Scientifique” (CEMRACS
+        2015) using the FEEL++ library which is developed in local.
+
+%    The developed methods experimentally proved to be superior to manual planning
+%    and to other state-of-the-art approaches. After more than two years service,
+%    SPRINT has not only introduced a considerable improvement in the planning and
+%    management practices, but has also achieved a significant level-of-service
+%    improvement of desk customer services. In particular, SPRINT allowed a 35\%
+%    reduction of waiting time, a 49\% reduction of customers waiting more that 40
+%    minutes, a 13\% increase of customer satisfaction. 
+}}
+
+
+% Highlight et contribution
+\Setup{
+    highlight={
+        Better biological understanding
+        \focus{helps improving} alveolus construction,
+        increasing \focus{production}
+    },
+    contribution={Helps to understand\\
+        biological reaction inside the bioreactor
+	}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\CreateFirstPage
+
+\newpage
+
+\CreateSecondPage
+
+
+
+
+
+\end{document}
+
+
+
