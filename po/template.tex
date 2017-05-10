@@ -1,0 +1,113 @@
+%%% À compiler *deux fois* en utilisant *lualatex* 
+%%% La fonte Arial doit être installée sur le système
+\documentclass{success_stories}
+
+% Méta-données, ne sont pas affichées dans le document
+\MetaData{
+    author={Hild, Romain},
+    date={2017-05-10},
+    keywords={Navier-Stokes, curl},
+}
+
+
+\begin{document}
+
+% Titre, résumé en une ligne, secteur H2020, 
+\Setup{
+    name=$\text{NS}^2_{++}$: Non Standard Navier-Stokes in Feel++,
+    oneline=A non standard strategy for solving the incompressible Navier-Stokes equations,
+    h2020={Smart, green and integrated transport},
+    sector=MECHANICS AND MECHATRONICS
+}
+
+% Description du partenaire académique
+\Setup{academic/.cd,
+    name=Cemosis,
+    logo=Cemosis_logo.png,
+    description={Plastic Omnium is the world’s leading supplier of plastic and composite painted exterior components and modules. Its Auto Exterior Division supports our customers worldwide with 87 plants in 18 countries.}
+}
+
+% Description du partenaire industriel
+\Setup{industrial/.cd,
+    name=Plastic Omnium,
+    logo=po.jpg,
+    description = {Innovation through modeling and simulation.\\
+Cemosis is hosted by the Institute of Advanced Mathematical Research (IRMA) and was created in January 2013. Cemosis mainly relies currently on the team Modeling and Control of the IRMA.}
+}
+
+%Illustration
+\Setup{illustration/img={mode45.png},
+   illustration/height=5cm
+}
+
+% Description mathématique (1ère page)
+\Setup{math description={
+    The aim is to study a formulation of the Navier-Stokes equations involving the eigenfunctions of the curl operator.
+    This formulation would decompose the solution in space and time.
+    Thus, most of the computation is done once for the geometry, and each time step is not computationnaly intensive.
+    This is done mainly in three steps:
+    \begin{bullets}
+    \item Separate the boundary conditions of the main problem,
+    \item Seek the eigen modes of the rotational operator reliably and efficiently,
+    \item Project the NS equation on the space spaned by these eigen modes to reduce the computational cost.
+    \end{bullets}
+  }}
+
+% Description du problème et du contexte
+\Setup{problem description={
+    PlasticOmnium Automotive is a leading company of parts and plastic body modules.
+    In order to keep his place and ahead of the European regulations concerning the emission of $CO_2$, it must test the air flow over cars.
+    For this, the company needs performing models of turbulence geometry for several million cells.
+    }}
+
+% But de la collaboration
+\Setup{goal={
+\begin{bullets}
+\item Reduce the time and the computing power needed for the simulation
+\item Increase the length of the simulation by a factor 10
+\item Reduce the fuel consumption by a better aerodynamic
+\end{bullets}
+    }}
+
+% Résultat (2ème page)
+  \Setup{results={
+      The resolution of the non standard formulation of the Navier-Stokes equation
+      had to face several issues. We managed to solve efficiently and accurately the
+      eigen problem of the curl operator and to project the solution on the space spanned
+      by the eigen vectors. The last obstacle is the lifting of the boundary conditions.
+      In order to fix this, the collaboration between Cemosis and Plastic Omnium
+      continues and grows on the problematic of large scale post-processing of
+      computational fluid dynamics simulations.
+}}
+
+
+% Highlight et contribution
+\Setup{
+  highlight={
+    Deal with key\\
+    component of the \focus{non standard}
+    Navier-Stokes equation and
+    start a \focus{partnership} between
+    Cemosis and Plastic Omnium
+    },
+    contribution={Research on key\\
+	Future Aspect}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\CreateFirstPage
+
+\newpage
+
+\CreateSecondPage
+
+
+
+
+
+\end{document}
+
+
+
