@@ -15,8 +15,8 @@
 
 % Titre, résumé en une ligne, secteur H2020, 
 \Setup{
-    name=SIVIBIR++ Simulation of a bioreactor,
-    oneline=Simulation of a virtual bioreactor landfill using Feel++ framework,
+    name=M4SE Math for Smart Energy,
+    oneline=Optimization of energy storage within households,
     h2020={Secure, clean and efficient energy},
     sector=ENERGY ENVIRONMENT
 }
@@ -33,7 +33,7 @@
 % Description du partenaire académique
 \Setup{academic/.cd,
     name=cemosis,
-    logo=Figures/logos/logoCemosis.pdf,
+    logo=logoCemosis.pdf,
     description={Cemosis is hosted by the Institute of Advanced Mathematical
         Research (IRMA) and was created in January 2013. Cemosis mainly relies
         currently on the team Modeling and Control of the IRMA}
@@ -41,16 +41,18 @@
 
 % Description du partenaire industriel
 \Setup{industrial/.cd,
-    name=Optit,
-    logo=Figures/logos/logoCharier.jpg,
+    name=Hager,
+    logo=logoHager.jpg,
     description = {
-        The Charier company concentrates on five businesses: Aggregates, Earthworks, Roads and Urban Works, Civil Engineering and Special Works, Waste Recovery.
+        Manufacturer of electrical equipment for modular electrical
+        installation, energy management, alarm and home and building automation
+        system
     }
 }
 
 % Illustration
-\Setup{illustration/img={Figures/pngs/sivibir++/sivibirpp.png},
-    illustration/height=4cm
+\Setup{illustration/img={hager_scheme.png},
+    illustration/height=6cm
 }
 
 % Description mathématique (1ère page)
@@ -67,61 +69,53 @@
 %adaptive staffing and opening/closing rules. Finally, SPRINT evaluates the proposed optimal 
 %schedule and proceeds in an interate adaptive fashion till an overall satisfactory
 %solution is found.
-        A complex model involving seven equations to modelize the chemical
-        reactions inside the bioreactor has been proposed. The model
-        has been implemented using Feel++ a finite element library using
-        Galerkin Methods.
+        This project involves an optimization problems with constraints with some knowledges
+        (predictive data).
+        \begin{bullets}
+        \item Minimize a cost function to fit the eroadmap in function of real energy production.
+        \item Introduce constraints in the problem (Battery types, household production law imposed by governments).
+        \item Add predictive data (weather prediction, house energy knowledges,\ldots) in the model to handle free schedule.
+        \end{bullets}
 }}
 
 % Description du problème et du contexte
 \Setup{problem description={
-    The principle of a bioreactor landfill consists in accelerating
-    biodegradation of wastes. Maintaining an optimal degree of humidity, in
-    particular fostering leachates recirculation helps to achieve this goal.
-    The chemical reaction produces gaz which is reprocessed in another form of
-    energy (heat, electricity, …).
+        With the multiplications of photovoltaic panels, wind turbines and the
+        possibility to own its energy production, new problems emerged:
+        (i) Massive energy rejection causes electrical network disturbances.
+        (ii) Energy distributors imposed regulates household consumption in function of stock exchange prices. 
+        (iii) Energy waste due to non-consumed or non-selled energy during free schedule.
     }}
 
 % But de la collaboration
 \Setup{goal={
-        The goal of this project is to modelize the chemical reaction occuring
-        inside a real bioreactor, then to generalize the whole bioreactor
-        operating system. The final goal is to control the gaz production in
-        order to optimize bioreactor yield in function of the energy needs.
-%\begin{bullets}
-%    \item Reduce the maximum and average waiting time while maintaining a high service quality at Front Office
-%    \item Reduce of resource requirements even with increase in demand rate 
-%    \item Improve assignments of Back Office and sales tasks
-%\end{bullets}
+        The goal is first to control the energy
+        storage via energy buffers (batteries) and the rejection in the
+        electrical network with respect to distributors consigns (eroadmap).
+        Minimizing energy costs, maximizing energy resale during free schedule.
     }}
 
 % Résultat (2ème page)
 \Setup{results={
-        A multiphasic model has been established during a math-entreprise
-        studying week “Semaine d’Étude Math-Entreprise” (SEME). A C++
-        implementation of the model has been proposed during the “Centre d’Été
-        Mathématique de Recherche Avancée en Calcul Scientifique” (CEMRACS
-        2015) using the FEEL++ library which is developed in local.
-
-%    The developed methods experimentally proved to be superior to manual planning
-%    and to other state-of-the-art approaches. After more than two years service,
-%    SPRINT has not only introduced a considerable improvement in the planning and
-%    management practices, but has also achieved a significant level-of-service
-%    improvement of desk customer services. In particular, SPRINT allowed a 35\%
-%    reduction of waiting time, a 49\% reduction of customers waiting more that 40
-%    minutes, a 13\% increase of customer satisfaction. 
+A prototype of working algorithm has been establish during a 
+6 month works financed by AMIES PEPS contracts and master internship. The solution
+proposed is a strategy to fit the eroadmap taking into account predictive data.
+This works solved a blocking problem for the company which patented the algorithm
+and implemented it in the EMG controller for production.
 }}
 
 
 % Highlight et contribution
 \Setup{
     highlight={
-        Better biological understanding
-        \focus{helps improving} alveolus construction,
-        increasing \focus{production}
+        Energy storage to
+    \focus{reduce} energy wastes,
+    \focus{guaranty} safe electrical network for distributors
+    \focus{control} energy resale for households
     },
-    contribution={Helps to understand\\
-        biological reaction inside the bioreactor
+    contribution={Reduce energy\\
+        waste, control comsumption,
+        optimize energy resale
 	}
 }
 

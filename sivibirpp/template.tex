@@ -52,7 +52,7 @@
 
 % Illustration
 \Setup{illustration/img={sivibirpp.png},
-    illustration/height=4cm
+    illustration/height=6cm
 }
 
 % Description mathématique (1ère page)
@@ -72,7 +72,13 @@
         A complex model involving seven equations to modelize the chemical
         reactions inside the bioreactor has been proposed. The model
         has been implemented using Feel++ a finite element library using
-        Galerkin Methods.
+        Galerkin Methods. The model take into account the
+        \begin{bullets}
+        \item Carbon consumption by bacteria,
+        \item Gaz mixture production,
+        \item Water injections and evaporation,
+        \item Temperature inside an alveolus.
+        \end{bullets}
 }}
 
 % Description du problème et du contexte
