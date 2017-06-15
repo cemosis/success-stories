@@ -320,8 +320,8 @@
     };
 
 %% Place the academic and industrial logos
-    \node at ($(A)!0.5!(Anw)$) {\industriallogo}; %logo industrial partner
-    \node at ($(A)!0.5!(Ane)$) {\academiclogo}; %logo academic partner
+    \node at ($(A)!0.5!(Ane)$) {\industriallogo}; %logo industrial partner
+    \node at ($(A)!0.5!(Anw)$) {\academiclogo}; %logo academic partner
 
     
 
