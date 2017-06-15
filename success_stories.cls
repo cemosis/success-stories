@@ -1,6 +1,6 @@
 %%% Class for compiling success stories.
 %%% Author: Antoine Lejay 
-%%% Version: 0.3
+%%% Version: 0.4
 %%% Date: 2017-06-15
 
 %% This need to be compiled twice, because of the overlay option in tikz.
@@ -34,6 +34,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{fontspec}
 \setmainfont{Arial Narrow}
+  \setmathrm{Arial Narrow}
 
 \newfontface\thetitlefont{Arial}[LetterSpace=5,WordSpace=2]
 \DeclareTextFontCommand\thetitle{\thetitlefont}
