@@ -1,7 +1,7 @@
 %%% Class for compiling success stories.
 %%% Author: Antoine Lejay 
-%%% Version: 0.2
-%%% Date: 2017-02-15
+%%% Version: 0.3
+%%% Date: 2017-06-15
 
 %% This need to be compiled twice, because of the overlay option in tikz.
 %% This ensures the good placement on the page.
