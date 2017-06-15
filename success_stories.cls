@@ -1,6 +1,6 @@
 %%% Class for compiling success stories.
 %%% Author: Antoine Lejay 
-%%% Version: 0.4
+%%% Version: 0.5
 %%% Date: 2017-06-15
 
 %% This need to be compiled twice, because of the overlay option in tikz.
@@ -13,15 +13,11 @@
 \RequirePackage{pgfkeys}
 \RequirePackage[svgnames]{xcolor}
 \RequirePackage[a4paper,landscape]{geometry}
-\RequirePackage{pgfkeys}
 \RequirePackage{tikz}
 \RequirePackage{enumitem}
 \RequirePackage{microtype}
 \RequirePackage{etoolbox}
-%\renewcommand{\familydefault}{\sfdefault}
-%\RequirePackage{helvet}
 \RequirePackage{ragged2e}
-%\usepackage[sfdefault,light,condensed]{roboto} 
 \RequirePackage{hyperref}
 
 \usetikzlibrary{calc}
@@ -68,20 +64,30 @@
 %%% METADATA 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Define some metadata keys
 \pgfkeys{/metadata/.cd,
     author/.initial={[auteurs]},
     date/.initial={0000-00-00},
     keywords/.initial={},
+    institution/.initial={},
+    email/.initial={},
 }
 
+% Handler for unknown keys
+\pgfkeys{
+    /metadata/.unknown/.code={\typeout{Warning: Unknown metadata key ‘\pgfkeyscurrentkey’.}},
+}
+
+% Define the \MetaData command for setting up metadata.
 \newcommand{\MetaData}[1]{
     \pgfkeys{/metadata/.cd,#1}
 }
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% KEYS DEFINITION
+%%%
+%%% These keys are used to define the content
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \pgfkeyssetvalue{/project/name}{\textcolor{red}{Name of the project}}
@@ -103,6 +109,8 @@
 \pgfkeyssetvalue{/project/highlight}{\textcolor{red}{highlight}}
 \pgfkeyssetvalue{/project/contribution}{\textcolor{red}{contribution}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% LOGOS 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Undefined logo
@@ -134,25 +142,15 @@
 	{\def\illustration{\includegraphics[height=\illustrationheight]{#1}}}%
     }}
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-% For compact lists
-\newlength{\bulletwidth}
-\settowidth{\bulletwidth}{\textbullet}
-\newenvironment{bullets}{%
-\begin{itemize}[noitemsep,topsep=0pt,partopsep=0pt,leftmargin=!,label=\textbullet,labelwidth=\bulletwidth]}%
-{\end{itemize}} 
-
-
+%% TO SET UP THE CONTENT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% To set up the content
 \newcommand{\Setup}[1]{
 \pgfkeys{/project/.cd,#1}
 }
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% The  improve the size of the text
-\newcommand{\focus}[1]{\scalebox{1.3}{\bfseries #1}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -163,7 +161,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% First page
+%%% COMPOSITION OF THE FIRST PAGE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\CreateFirstPage}{
 
@@ -232,7 +230,7 @@
 %% / end of CreateFirstPage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Create Second Page
+%%% COMPOSITION OF THE SECOND PAGE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\CreateSecondPage}{
 \begin{tikzpicture}[remember picture,overlay,every node/.style={outer sep=0pt}]
@@ -328,11 +326,9 @@
 
 \end{tikzpicture}
 }
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% To create the whole document
+%%% TO CREATE THE WHOLE DOCUMENT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\CreateStory}{
 \CreateFirstPage
@@ -341,4 +337,23 @@
 
 \CreateSecondPage
 }
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% TYPOGRAPHICAL HELPERS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% COMPACT LISTS IN THE TEXT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlength{\bulletwidth}
+\settowidth{\bulletwidth}{\textbullet}
+\newenvironment{bullets}{%
+\begin{itemize}[noitemsep,topsep=0pt,partopsep=0pt,leftmargin=!,label=\textbullet,labelwidth=\bulletwidth]}%
+{\end{itemize}} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% TO INCREASE THE SIZE OF THE TEXT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\focus}[1]{\scalebox{1.3}{\bfseries #1}}
