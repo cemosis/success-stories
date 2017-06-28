@@ -1,6 +1,6 @@
 %%% Class for compiling success stories.
 %%% Author: Antoine Lejay 
-%%% Version: 0.5
+%%% Version: 0.6
 %%% Date: 2017-06-15
 
 %% This need to be compiled twice, because of the overlay option in tikz.
@@ -19,7 +19,10 @@
 \RequirePackage{etoolbox}
 \RequirePackage{ragged2e}
 \RequirePackage{hyperref}
+\RequirePackage[main=french,english]{babel}
+\RequirePackage{csquotes}
 
+%% Load tikzlibrary
 \usetikzlibrary{calc}
 \usetikzlibrary{patterns}
 
@@ -73,9 +76,15 @@
     email/.initial={},
 }
 
-% Handler for unknown keys
+% handler for the lang 
 \pgfkeys{
-    /metadata/.unknown/.code={\typeout{Warning: Unknown metadata key ‘\pgfkeyscurrentkey’.}},
+/metadata/lang/.initial={french}
+}
+
+
+% handler for unknown keys
+\pgfkeys{
+    /metadata/.unknown/.code={\typeout{warning: unknown metadata key ‘\pgfkeyscurrentkey’.}},
 }
 
 % Define the \MetaData command for setting up metadata.
@@ -164,8 +173,16 @@
 %%% COMPOSITION OF THE FIRST PAGE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\CreateFirstPage}{
+% should be done like this 
+% see https://tex.stackexchange.com/questions/136659/how-to-pass-a-macro-as-the-argument-to-selectlanguage
+\pgfkeys{/metadata/lang/.get=\documentlang}
+\expandafter\selectlanguage\expandafter{\documentlang} 
 
 \begin{tikzpicture}[remember picture,overlay,every node/.style={outer sep=0pt},]
+
+    % Copyright
+    \node[anchor=south west,scale=1,rotate=90,inner sep=0pt,color=LightGray!80!black] (amiesfsmp) at ($(current page.south east)+(-0.3cm,0.3cm)$) 
+	{\textcopyright\ Agence Maths Entreprises \& Fondation des Sciences Mathématiques de Paris};
 
     % Name of the project
     \node[anchor=north,scale=3,inner sep=0pt,color=templatemarroon] (main) at ($(current page.north)-(0cm,0.3cm)$)
@@ -234,6 +251,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\CreateSecondPage}{
 \begin{tikzpicture}[remember picture,overlay,every node/.style={outer sep=0pt}]
+
+    % Copyright
+    \node[anchor=south west,scale=1,rotate=90,inner sep=0pt,color=LightGray!80!black] (amiesfsmp) at ($(current page.south east)+(-0.3cm,0.3cm)$) 
+	{\textcopyright\ Agence Maths Entreprises \& Fondation des Sciences Mathématiques de Paris};
 
     \node[anchor=north,scale=3,inner sep=0pt,color=templatemarroon] (main) at ($(current page.north)-(0cm,0.5cm)$)
 	{ \thetitle{\pgfkeysvalueof{/project/name}} };
