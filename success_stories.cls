@@ -1,6 +1,6 @@
 %%% Class for compiling success stories.
 %%% Author: Antoine Lejay 
-%%% Version: 0.6
+%%% Version: 0.7
 %%% Date: 2017-06-15
 
 %% This need to be compiled twice, because of the overlay option in tikz.
@@ -186,11 +186,11 @@
 
     % Name of the project
     \node[anchor=north,scale=3,inner sep=0pt,color=templatemarroon] (main) at ($(current page.north)-(0cm,0.3cm)$)
-	{\thetitle{ \pgfkeysvalueof{/project/name} }};
+	{\ignorespaces\thetitle{\pgfkeysvalueof{/project/name} }};
 
     % One line description
-    \node[anchor=north west,scale=1.8,color=templateblue] (desc) at (main.south west)
-	{ \theoneline{ \pgfkeysvalueof{/project/oneline} }};
+    \node[draw,anchor=north west,scale=1.8,color=templateblue,text width=0.9\textwidth] (desc) at (main.south west)
+	{\ignorespaces\theoneline{\pgfkeysvalueof{/project/oneline} }};
 
     \path let \p1=(desc.south),\p2=(current page.east) in node[anchor=north east,yshift=-0.5cm,xshift=-1cm,scale=1.3,color=templatemarroon] (h2020) at (\x2,\y1)
     { H2020 SOCIETAL CHALLENGES: \pgfkeysvalueof{/project/h2020} };
@@ -256,11 +256,11 @@
     \node[anchor=south west,scale=1,rotate=90,inner sep=0pt,color=LightGray!80!black] (amiesfsmp) at ($(current page.south east)+(-0.3cm,0.3cm)$) 
 	{\textcopyright\ Agence Maths Entreprises \& Fondation des Sciences Mathématiques de Paris};
 
-    \node[anchor=north,scale=3,inner sep=0pt,color=templatemarroon] (main) at ($(current page.north)-(0cm,0.5cm)$)
-	{ \thetitle{\pgfkeysvalueof{/project/name}} };
+    \node[anchor=north,scale=3,inner sep=0pt,color=templatemarroon] (main) at ($(current page.north)-(0cm,0.3cm)$)
+	{\ignorespaces\thetitle{\pgfkeysvalueof{/project/name}} };
 
-    \node[anchor=north west,scale=1.8,color=templateblue] (desc) at (main.south west)
-	{ \theonelinefont{\pgfkeysvalueof{/project/oneline}} };
+    \node[draw,anchor=north west,scale=1.8,color=templateblue,text width=0.9\textwidth] (desc) at (main.south west)
+	{\ignorespaces\theonelinefont{\pgfkeysvalueof{/project/oneline}} };
 
 %%% Results and benefices
     \node[anchor=north west,xshift=2cm,scale=1.3] (result) at ($(current page.south west)+(0,17cm)$)
@@ -378,3 +378,5 @@
 %%%% TO INCREASE THE SIZE OF THE TEXT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\focus}[1]{\scalebox{1.3}{\bfseries #1}}
+
+% changes 0.7 alignement of title and one-line corrected to have similar presentation on the two pages
