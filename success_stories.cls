@@ -189,13 +189,13 @@
 	{\ignorespaces\thetitle{\pgfkeysvalueof{/project/name} }};
 
     % One line description
-    \node[draw,anchor=north west,scale=1.8,color=templateblue,text width=0.9\textwidth] (desc) at (main.south west)
+    \node[anchor=north west,scale=1.8,color=templateblue,text width=0.9\textwidth] (desc) at (main.south west)
 	{\ignorespaces\theoneline{\pgfkeysvalueof{/project/oneline} }};
 
     \path let \p1=(desc.south),\p2=(current page.east) in node[anchor=north east,yshift=-0.5cm,xshift=-1cm,scale=1.3,color=templatemarroon] (h2020) at (\x2,\y1)
     { H2020 SOCIETAL CHALLENGES: \pgfkeysvalueof{/project/h2020} };
 
-    \path let \p1=(h2020.south),\p2=(current page.east) in node[anchor=north east,yshift=-0.5cm,xshift=-1cm,scale=1.3,color=templatemarroon] at (\x2,\y1)
+    \path let \p1=(h2020.south),\p2=(current page.east) in node[anchor=north east,yshift=-0.3cm,xshift=-1cm,scale=1.3,color=templatemarroon] at (\x2,\y1)
     { PRODUCTIVE SECTOR:  \pgfkeysvalueof{/project/sector}};
 
 
@@ -259,7 +259,7 @@
     \node[anchor=north,scale=3,inner sep=0pt,color=templatemarroon] (main) at ($(current page.north)-(0cm,0.3cm)$)
 	{\ignorespaces\thetitle{\pgfkeysvalueof{/project/name}} };
 
-    \node[draw,anchor=north west,scale=1.8,color=templateblue,text width=0.9\textwidth] (desc) at (main.south west)
+    \node[anchor=north west,scale=1.8,color=templateblue,text width=0.9\textwidth] (desc) at (main.south west)
 	{\ignorespaces\theonelinefont{\pgfkeysvalueof{/project/oneline}} };
 
 %%% Results and benefices
