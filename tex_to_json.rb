@@ -5,33 +5,30 @@ require 'pry'
 require 'awesome_print'
 
 class String
+    # Transform newlines and spaces into a single space
     def compact_spaces!
 	gsub!(/\n+/," ")
 	gsub!(/\s+/," ")
 	return self
     end
 
+    # Remove the surrounding brackets
     def remove_surrounding_brackets!
 	sub!(/\A\s*{\s*/,"")
 	sub!(/\s*}\s*\Z/,"")
-	strip!
-	return self
-    end
-
-    def to_blank_if_nil
 	return self
     end
 end
 
-class NilClass
-    def to_blank_if_nil
-	return ""
-    end
-end
 
 
-# Class that contains the text to analyze
+# Class that contains the text to analyze.
+# Stores a string together with a pointer.
 class Text
+
+    extend Forwardable
+
+    def_delegator :@content,:[]
 
     # content contains the text
     attr_reader :content
@@ -44,6 +41,7 @@ class Text
     # contains the last match (nil or [MatchData])
     attr_accessor :last_match
 
+    # Takes a string.
     def initialize(content)
 	raise ArgumentError,"Expect a string" unless content.kind_of?(String)
 	@content=content
@@ -53,16 +51,14 @@ class Text
 	@last_match=nil
     end
 
-    def [](value)
-	@content[value]
-    end
-
     def from_pos
 	@content[@pos..-1]
     end
 
+    # Check if what is after the pointer's position is blank
     def blank_from_pos?
-	@content[@pos..-1].nil? || @content[@pos..-1].blank?
+	# The string @content[@pos..-1] may be nil, which justify the #to_s
+	@content[@pos..-1].to_s.blank?
     end
 end
 
@@ -73,7 +69,7 @@ class TeXText < Text
     TexLineComment=/\A%/ # the whole line is commented
     TeXComment=/(?<!\\)%/
 
-    # remove the comments
+    # remove the comments of the tex file
     def uncomment! 
 	raise "Cannot change a frozen text" if @freeze
 	new_content=[] # will accumulate the new lines
@@ -88,6 +84,7 @@ class TeXText < Text
 	return self
     end
 
+    # parse a success story
     def parse
 	@pos=0 # rewind
 	MetaDataParser.parse(self)
@@ -169,9 +166,10 @@ class KeyValueParser < ObjectParser
 	    content.pos+=m.end(0) # update the pointer position after the end of the match
 	    i=start=content.pos
 	    while true do 
-		if content[i].nil? then # at end of the string
-		    object[key]=content[start..i].to_blank_if_nil.remove_surrounding_brackets! # this may be an empty string
-		    content.pos=i
+		if content[i].nil? then # at end of the string, return the whole content
+		    # the #to_s is for transforming a nil into an empty string
+		    object[key]=content[start..i].to_s.remove_surrounding_brackets! # this may be an empty string 
+		    content.pos=i # set the new position
 		    return true
 		elsif content[i]=="," then
 		    object[key]=content[start...i].remove_surrounding_brackets! # extract the value, do not include the comma
@@ -237,8 +235,19 @@ data.each_pair do |k,v|
     data[k]=TeXText.new(v).uncomment!.parse
 end
 
+result={}
+data.each_key do |key|
+    result[key] = data[key].data
+end
+
+
+File.open("stories.json","w") do |file|
+    file.puts result.to_json
+end
 
 
 
 
-binding.pry
+
+
+#binding.pry
