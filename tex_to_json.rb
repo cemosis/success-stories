@@ -139,7 +139,8 @@ class SetupParser < ObjectParser
     Regexp_setup=/\\(Setup(\p{Lu}\p{L}*)?){/
 
     def self.parse(content)
-	# detect a Setup
+	# Detect a Setup. Unlike metadata, this command may be used
+	# several times.
 	return false unless super(content,Regexp_setup)
 	# create the key (the name of a setup), a symbol in lowercase.
 	key=content.last_match[1].downcase.to_sym 
@@ -147,12 +148,12 @@ class SetupParser < ObjectParser
 	start=content.pos
 	if GroupParser.parse(content) then 
 	    # create a new key if it does not exists
-	    content.data[key]=[] unless content.data.has_key?(key) 
+	    content.data[key]={} unless content.data.has_key?(key) 
 	    # push the content, exclude nesting brackets
 	    keysvalues=content[start...content.pos].compact_spaces!.remove_surrounding_brackets! 
 	    obj={}
 	    KeysValuesParser.parse(TeXText.new(keysvalues),obj)
-	    content.data[key] << obj
+	    content.data[key].merge!(obj) # merge with the values already found 
 	    return true
 	else
 	    raise "Non nested brackets while parsing Setup."
@@ -247,7 +248,7 @@ end
 result={}
 data.each_key do |key|
     result[key] = data[key].data
-    result[key][:setup]=result[key][:setup].inject({},&:merge) # merge all the hash
+    #result[key][:setup]=result[key][:setup].inject({},&:merge) # merge all the hash
 end
 
 
