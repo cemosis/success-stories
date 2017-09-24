@@ -71,20 +71,19 @@ class TeXText < Text
 
     # remove the comments of the tex file
     def uncomment! 
-	raise "Cannot change a frozen text" if @freeze
-	new_content=[] # will accumulate the new lines
-	@content.each_line do |line|
+	raise "Cannot change a frozen text." if @frozen
+	@content=@content.each_line.each_with_object([]) do |line,new_content|
 	    line.chomp! # remove the newline if any
 	    m=line.match(TexLineComment) # check if the whole line is commented
 	    next unless m.nil? # read the next line if the whole line is commented
 	    m=line.match(TeXComment) # match comment if any
 	    new_content << (m.nil? ? line : m.pre_match)  # keep only the pre-match
-	end
-	@content=new_content.join("\n") # write the new content
+	end.join("\n")
 	return self
     end
 
-    # parse a success story
+    # Parse a success story
+    # It proceed in two passes: first the metadata, then the setup.
     def parse
 	@pos=0 # rewind
 	MetaDataParser.parse(self)
@@ -101,7 +100,7 @@ class ObjectParser
     def self.parse(content,regexp)
 	if regexp === content.from_pos then 
 	    content.last_match=m=Regexp.last_match # store the match
-	    content.pos+=m.end(0) # update the pointer position at the end of the string
+	    content.pos+=m.end(0) # update the pointer position at the end of the matched string
 	    return true
 	else 
 	    return false
@@ -121,10 +120,11 @@ class MetaDataParser < ObjectParser
 	content.pos-=1 # inject the {
 	start=content.pos
 	if GroupParser.parse(content) then 
-	    keysvalues=content[start..content.pos].compact_spaces!.remove_surrounding_brackets! # push the content, exclude nesting brackets
-	    obj={}
-	    KeysValuesParser.parse(TeXText.new(keysvalues),obj)
-	    content.data[:metadata] = obj
+	    # push the content, exclude nesting brackets
+	    keysvalues=content[start..content.pos].compact_spaces!.remove_surrounding_brackets!
+	    content.data[:metadata]={}
+	    # parse the key-values pairs
+	    KeysValuesParser.parse(TeXText.new(keysvalues),content.data[:metadata]) 
 	    return true
 	else
 	    raise "Non nested parenthesis while parsing MetaData."
@@ -134,17 +134,22 @@ end
 
 # There could be several Setup variables
 class SetupParser < ObjectParser
+
+    # Regular expression to detect \SetupXyz
     Regexp_setup=/\\(Setup(\p{Lu}\p{L}*)?){/
 
     def self.parse(content)
 	# detect a Setup
 	return false unless super(content,Regexp_setup)
-	key=content.last_match[1].downcase.to_sym # create the key, a symbol in lowercase
+	# create the key (the name of a setup), a symbol in lowercase.
+	key=content.last_match[1].downcase.to_sym 
 	content.pos-=1 # inject the {
 	start=content.pos
 	if GroupParser.parse(content) then 
-	    content.data[key]=[] unless content.data.has_key?(key) # create a new key if it does not exists
-	    keysvalues=content[start...content.pos].compact_spaces!.remove_surrounding_brackets! # push the content, exclude nesting brackets
+	    # create a new key if it does not exists
+	    content.data[key]=[] unless content.data.has_key?(key) 
+	    # push the content, exclude nesting brackets
+	    keysvalues=content[start...content.pos].compact_spaces!.remove_surrounding_brackets! 
 	    obj={}
 	    KeysValuesParser.parse(TeXText.new(keysvalues),obj)
 	    content.data[key] << obj
@@ -160,24 +165,28 @@ class KeyValueParser < ObjectParser
     # @param [TeXText] content
     # @param [Hash] object for storing keys/values
     def self.parse(content,object={})
-	if %r{\s*(\w*?)\s*=\s*} === content[content.pos..-1] then 
+	if %r{\s*(\w*?)\s*=\s*} === content.from_pos then 
 	    m=Regexp.last_match # store the match
 	    key=m[1].to_sym # get the key as a symbol
 	    content.pos+=m.end(0) # update the pointer position after the end of the match
-	    i=start=content.pos
+	    i=start=content.pos # store the pointer's position
+	    # Iterate over the characters to check for end of string, a comma or an opening bracket
 	    while true do 
 		if content[i].nil? then # at end of the string, return the whole content
+		    # this may be an empty string,
 		    # the #to_s is for transforming a nil into an empty string
-		    object[key]=content[start..i].to_s.remove_surrounding_brackets! # this may be an empty string 
+		    object[key]=content[start..i].to_s.remove_surrounding_brackets! 
 		    content.pos=i # set the new position
 		    return true
 		elsif content[i]=="," then
-		    object[key]=content[start...i].remove_surrounding_brackets! # extract the value, do not include the comma
+		    # extract the value, do not include the comma
+		    object[key]=content[start...i].remove_surrounding_brackets! 
 		    content.pos=i+1 # skip the comma
 		    return true
 		elsif content[i]=="{" then 
-		    start=content.pos=i
-		    GroupParser.parse(content) # find balanced brackets
+		    content.pos=i
+		    # find balanced brackets, the pointer position is advanced.
+		    GroupParser.parse(content) 
 		    i=content.pos # after the paired bracket
 		else
 		    i+=1 # increase the pointer
@@ -238,6 +247,7 @@ end
 result={}
 data.each_key do |key|
     result[key] = data[key].data
+    result[key][:setup]=result[key][:setup].inject({},&:merge) # merge all the hash
 end
 
 
