@@ -41,6 +41,8 @@ class Text
     attr_accessor :frozen
     # data containts the parsed data
     attr_accessor :data
+    # contains the last match (nil or [MatchData])
+    attr_accessor :last_match
 
     def initialize(content)
 	raise ArgumentError,"Expect a string" unless content.kind_of?(String)
@@ -48,10 +50,19 @@ class Text
 	@pos=0
 	@frozen=false
 	@data={}
+	@last_match=nil
     end
 
     def [](value)
 	@content[value]
+    end
+
+    def from_pos
+	@content[@pos..-1]
+    end
+
+    def blank_from_pos?
+	@content[@pos..-1].nil? || @content[@pos..-1].blank?
     end
 end
 
@@ -82,8 +93,8 @@ end
 class ObjectParser 
 
     def self.parse(content,regexp)
-	if regexp === content.content[content.pos..-1] then 
-	    m=Regexp.last_match # store the match
+	if regexp === content.from_pos then 
+	    content.last_match=m=Regexp.last_match # store the match
 	    content.pos+=m.end(0) # update the pointer position at the end of the string
 	    return true
 	else 
@@ -104,7 +115,7 @@ class MetaDataParser < ObjectParser
 	content.pos-=1 # inject the {
 	start=content.pos
 	if GroupParser.parse(content) then 
-	    content.data[:metadata]=content[start...content.pos].compact_spaces!.remove_surrounding_brackets! # push the content, exclude nesting brackets
+	    content.data[:metadata]=content[start..content.pos].compact_spaces!.remove_surrounding_brackets! # push the content, exclude nesting brackets
 	    return true
 	else
 	    raise "Non nested parenthesis while parsing MetaData."
@@ -114,19 +125,23 @@ end
 
 # There could be several Setup variables
 class SetupParser < ObjectParser
-    Regexp_setup=/\\Setup{/
+    Regexp_setup=/\\(Setup(\p{Lu}\p{L}*)?){/
 
     def self.parse(content)
 	# detect a Setup
 	return false unless super(content,Regexp_setup)
+	key=content.last_match[1].downcase.to_sym # create the key, a symbol in lowercase
 	content.pos-=1 # inject the {
 	start=content.pos
 	if GroupParser.parse(content) then 
-	    content.data[:setup]=[] unless object.has_key? :setup # create a new key if it does not exists
-	    content.data[:setup] << content[start...content.pos].compact_spaces!.remove_surrounding_brackets! # push the content, exclude nesting brackets
+	    content.data[key]=[] unless content.data.has_key?(key) # create a new key if it does not exists
+	    keysvalues=content[start..content.pos].compact_spaces!.remove_surrounding_brackets! # push the content, exclude nesting brackets
+	    obj={}
+	    KeysValuesParser.parse(TeXText.new(keysvalues),obj)
+	    content.data[key] << obj
 	    return true
 	else
-	    raise "Non nested parenthesis while parsing Setup."
+	    raise "Non nested brackets while parsing Setup."
 	end
     end
 end
@@ -142,10 +157,11 @@ class KeyValueParser < ObjectParser
 	    i=start=content.pos
 	    while true do 
 		if content[i].nil? then # at end of the string
-		    object[key]=content[start..i].to_blank_if_nil.remove_surrounding_brackets! # empty string
+		    object[key]=content[start..i].to_blank_if_nil.remove_surrounding_brackets! # this may be an empty string
+		    content.pos=i
 		    return true
 		elsif content[i]=="," then
-		    object[key]=content[start...i].remove_surrounding_brackets! # extract the value
+		    object[key]=content[start...i].remove_surrounding_brackets! # extract the value, do not include the comma
 		    content.pos=i+1 # skip the comma
 		    return true
 		elsif content[i]=="{" then 
@@ -154,6 +170,7 @@ class KeyValueParser < ObjectParser
 		    i=content.pos # after the paired bracket
 		else
 		    i+=1 # increase the pointer
+		    ap content[i]
 		end
 	    end
 	else
@@ -166,7 +183,7 @@ end
 class KeysValuesParser < ObjectParser
     def self.parse(content,object={})
 	while KeyValueParser.parse(content,object) do end
-	raise "Unexpected content while parsing keys-values: %s" %[content[content.pos..-1]] unless content[content.pos..-1].blank?
+	raise "Unexpected content while parsing keys-values: %s" %[content[content.pos..-1]] unless content.blank_from_pos?
 	return true
     end
 end
@@ -194,21 +211,16 @@ end
 
 content=TeXText.new(File.read("m4se/template.tex")).uncomment!
 
+
+
+
+
+
+
+
 MetaDataParser.parse(content)
-
-x=TeXText.new(content.data[:metadata])
-ap x
-
-obj={}
-KeysValuesParser.parse(x,obj)
-ap obj
-ap x[x.pos..-1]
-
-
-
-
-#content.pos=0
-#while SetupParser.parse(content) do end
+content.pos=0
+while SetupParser.parse(content) do end
 
 #ap obj
 
