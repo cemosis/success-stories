@@ -17,6 +17,16 @@ class String
 	strip!
 	return self
     end
+
+    def to_blank_if_nil
+	return self
+    end
+end
+
+class NilClass
+    def to_blank_if_nil
+	return ""
+    end
 end
 
 
@@ -82,6 +92,7 @@ class ObjectParser
     end
 end
 
+
 # Parser for the metadata
 class MetaDataParser < ObjectParser
 
@@ -121,10 +132,30 @@ class SetupParser < ObjectParser
 end
 
 # Detection of change of directory
-class ChangeDirectoryKeyParser < ObjectParser
-    def self.parse(content,object)
-	if %r{\s*(\w*?)/\.cd\s*,} === content[pos..-1] then 
-	    return true
+class KeyValueParser < ObjectParser
+    def self.parse(content,object={})
+	ap content[content.pos..-1]
+	if %r{\s*(\w*?)\s*=\s*} === content[content.pos..-1] then 
+	    m=Regexp.last_match # store the match
+	    key=m[1] # get the key
+	    content.pos+=m.end(0) # update the pointer position after the end of the match
+	    i=start=content.pos
+	    while true do 
+		if content[i].nil? then # at end of the string
+		    object[key]=content[start..i].to_blank_if_nil.remove_surrounding_brackets! # empty string
+		    return true
+		elsif content[i]=="," then
+		    object[key]=content[start...i].remove_surrounding_brackets! # extract the value
+		    content.pos=i+1 # skip the comma
+		    return true
+		elsif content[i]=="{" then 
+		    start=content.pos=i
+		    GroupParser.parse(content) # find balanced brackets
+		    i=content.pos # after the paired bracket
+		else
+		    i+=1 # increase the pointer
+		end
+	    end
 	else
 	    return false
 	end
@@ -132,16 +163,11 @@ class ChangeDirectoryKeyParser < ObjectParser
 end
 
 # Detection of change of directory
-class KeyValueParser < ObjectParser
-    def self.parse(content,object)
-	while true do 
-	    if %r{\s*(\w*?)\s*=\s*} === content[pos..-1] then 
-		m=Regexp.last_match # store the match
-		key=m[1] # get the key
-		content.pos+=m.end(0) # update the pointer position at the end of the match
-		ap content[pos..pos+10]
-	    end
-	end
+class KeysValuesParser < ObjectParser
+    def self.parse(content,object={})
+	while KeyValueParser.parse(content,object) do end
+	raise "Unexpected content while parsing keys-values: %s" %[content[content.pos..-1]] unless content[content.pos..-1].blank?
+	return true
     end
 end
 
@@ -172,6 +198,13 @@ MetaDataParser.parse(content)
 
 x=TeXText.new(content.data[:metadata])
 ap x
+
+obj={}
+KeysValuesParser.parse(x,obj)
+ap obj
+ap x[x.pos..-1]
+
+
 
 
 #content.pos=0
