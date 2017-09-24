@@ -1,0 +1,93 @@
+%%% À compiler *deux fois* en utilisant *lualatex* 
+%%% La fonte Arial doit être installée sur le système
+\documentclass{success_stories}
+\usepackage{mathtools}
+
+
+% Méta-données, ne sont pas affichées dans le document
+\MetaData{
+    author={},
+    date={2017-08-04},
+    keywords={},
+    lang={english},
+    version={working},
+    identifier={sediment},
+}
+
+
+\begin{document}
+
+% Titre, résumé en une ligne, secteur H2020, 
+\Setup{
+    name=Numerical Simulation of the Sediment Transport,
+    oneline=Numerical Simulation of the Sediment Transport,
+    h2020={sediment transport, numerical analysis}, % ??? 
+    sector=HYDRAULICS
+}
+
+% Description du partenaire académique
+\SetupAcademic{
+    name=,
+    logo=,
+    description={}
+}
+
+% Description du partenaire industriel
+\SetupIndustrial{
+    name=,
+    logo=,
+    description = {}
+}
+
+%Illustration
+\SetupIllustration{
+    img=,
+   height=5cm
+}
+
+% Description mathématique (1ère page)
+\Setup{math description={
+	The mathematical model consists in the Saint-Venant—Exner equations, one of the most used model for bedload sediment transport.
+These equations are solved with help of a finite volume method based on a three-wave approximate Riemann solver that satisfies classical properties of positivity, well-balancing and stability.
+  }}
+
+% Description du problème et du contexte
+\Setup{problem description={
+	Predicting the evolution of river beds is an important issue for electricity companies such as EDF. In the industrial point of view, it is necessary to be able to simulate this evolution near the hydraulic facilities in order to ensure the performance and the safety of the infrastructures in accordance to environmental constraints.
+    }}
+
+% But de la collaboration
+\Setup{goal={
+	The goal is to propose a tool to simulate the bedload sediment transport that occurs in rivers. The numerical method has to be robust, fast and easy to compute ; the treatment of the coupling between the Saint-Venant and the Exner equations leading to stability issues related to numerical schemes is an open question.
+    }}
+
+% Résultat (2ème page)
+  \Setup{results={
+The numerical scheme is proved to be efficient for academic and industrial applications. This work has also permitted to propose a weak coupling between the two models that can solve the stability issue.
+This method will be integrated in the software suite Telemac2D, a 2D integrated suite of solvers for free surface flow problems developed by EDF.
+In addition, the results of this work have permitted to improve another software suite developed by EDF called Mascaret-Courlis that also solves free surface flow problems in 1D.
+	  
+}}
+
+
+% Highlight et contribution
+\Setup{
+  highlight={
+      Better understanding of the coupling of the Saint-Venant—Exner equations. Optimization of the computation time
+    },
+    contribution={Stable and fast computational tools for bedload transport}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\CreateStory
+
+
+
+
+
+\end{document}
+
+
+

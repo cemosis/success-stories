@@ -1,0 +1,113 @@
+%%% À compiler *deux fois* en utilisant *lualatex* 
+%%% La fonte Arial doit être installée sur le système
+\documentclass{success_stories}
+
+% Méta-données, ne sont pas affichées dans le document
+\MetaData{
+    author={Blanc, Xavier},
+    date={2017-06-16},
+    keywords={Big data, machine learning},
+    version={working},
+    lang={english},
+    identifier={safety_line},
+}
+
+
+\begin{document}
+
+% Titre, résumé en une ligne, secteur H2020, 
+\Setup{
+    name=Safety Line: big data applied to air transport,
+    oneline=Risk estimation in air transport using machine learning,
+    h2020={aeronautics, data, risk},
+    sector=Security in transport
+}
+
+%%% Les challenges H2020
+%    Health, demographic change and wellbeing;
+%    Food security, sustainable agriculture and forestry, marine and maritime and inland water research, and the Bioeconomy;
+%    Secure, clean and efficient energy;
+%    Smart, green and integrated transport;
+%    Climate action, environment, resource efficiency and raw materials;
+%    Europe in a changing world - inclusive, innovative and reflective societies;
+%    Secure societies - protecting freedom and security of Europe and its citizens.
+
+% Description du partenaire académique
+\SetupAcademic{
+    name=LSTA,
+    logo=UPMC_Sorbonne_Universites.png,
+    description={LSTA stands for "Theoretical and Applied Statistics Laboratory". It is the statistics research department of Université Pierre et Marie Curie, in Paris.}
+}
+
+% Description du partenaire industriel
+\SetupIndustrial{
+    name=Safety Line,
+    logo=NEW-logo-safetyline2.png,
+    description = {The company Safety Line with created in 2010. It offers solutions innovative solutions for
+      aviation safety and efficiency. These solutions are based on data analysis and machine learning.}
+}
+
+% Illustration
+\SetupIllustration{
+    img={aircraft.JPG},
+    height=6cm
+}
+
+% Description mathématique (1ère page)
+\Setup{math description={
+Baptiste Gregorutti's PhD aimed at using machine learning techniques on flight data. The objective was to use a
+bottom-up strategy, starting from the question of finding flights which were potentially dangerous, even though no
+accident occured. 
+
+A first analysis indicates that data are highly dependent, so a natural approach is to select relevant data for the
+events under consideration. In order to do so, the method of random forests was applied with success. In a second
+step, this method was extended to multivariate functionnal data, allowing for the use of more general criteria.
+}}
+
+% Description du problème et du contexte
+\Setup{problem description={
+    The data from airplane's flight recorders (black boxes) are stored by companies, but they remain unused, except
+    when an incident occurs. The idea of the PhD thesis of Baptiste Gregorutti (supervised by Gérard
+    Biau, Bertrand Michel and Philippe Saint-Pierre) was to use these data in order to detect risky situations, even for an eventless flight.  
+    }}
+
+% But de la collaboration
+\Setup{goal={
+Develop an algorithm allowing for:
+\begin{enumerate}
+\item the detection of risky flights;
+\item finding variables which could be related to these risks.
+\end{enumerate}
+Propose an ready-to use implementation, with the possibility to tune the paremeters of the algorithm. 
+    }}
+
+% Résultat (2ème page)
+\Setup{results={
+    The method proved to be efficient in several relevant use-cases. After the completion of the PhD, a software
+    was developped, using this algorithm: FlightScanner. This software is now available as a product of the
+    company. Baptiste Gregorutti has been hired as a researcher in data science. In January 2017, he has become
+    research manager.
+}}
+
+
+% Highlight et contribution
+\Setup{
+    highlight={Use of up-to-date \focus{machine learning} algorithms in a risk management software.
+    },
+    contribution={New product allowing for efficient data analysis of flight data.}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\CreateStory
+
+\end{document}
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

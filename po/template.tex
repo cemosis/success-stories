@@ -10,6 +10,8 @@
     date={2017-05-10},
     keywords={Navier-Stokes, curl},
     lang={english},
+    identifier={po},
+    version={working},
 }
 
 
@@ -24,14 +26,14 @@
 }
 
 % Description du partenaire académique
-\Setup{academic/.cd,
+\SetupAcademic{
     name=Cemosis,
     logo=Cemosis_logo.png,
     description={Plastic Omnium is the world’s leading supplier of plastic and composite painted exterior components and modules. Its Auto Exterior Division supports our customers worldwide with 87 plants in 18 countries.}
 }
 
 % Description du partenaire industriel
-\Setup{industrial/.cd,
+\SetupIndustrial{
     name=Plastic Omnium,
     logo=po.jpg,
     description = {Innovation through modeling and simulation.\\
@@ -39,8 +41,9 @@ Cemosis is hosted by the Institute of Advanced Mathematical Research (IRMA, Stra
 }
 
 %Illustration
-\Setup{illustration/img={mode45.png},
-   illustration/height=5cm
+\SetupIllustration{
+   img={mode45.png},
+   height=5cm
 }
 
 % Description mathématique (1ère page)

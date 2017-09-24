@@ -7,7 +7,9 @@
     author={Dollé, Guillaume},
     date={2017-05-11},
     keywords={Optimization},
-    lang={english}
+    lang={english},
+    version={working},
+    identifier={m4se}
 }
 
 
@@ -31,16 +33,16 @@
 %    Secure societies - protecting freedom and security of Europe and its citizens.
 
 % Description du partenaire académique
-\Setup{academic/.cd,
+\SetupAcademic{
     name=cemosis,
-    logo=logoCemosis.pdf,
+    logo= Cemosis_logo.png,
     description={Cemosis is hosted by the Institute of Advanced Mathematical
         Research (IRMA, Strasbourg) and was created in January 2013. Cemosis mainly relies
         currently on the team Modeling and Control of the IRMA}
 }
 
 % Description du partenaire industriel
-\Setup{industrial/.cd,
+\SetupIndustrial{
     name=Hager,
     logo=logoHager.jpg,
     description = {
@@ -51,8 +53,9 @@
 }
 
 % Illustration
-\Setup{illustration/img={hager_scheme.png},
-    illustration/height=6cm
+\SetupIllustration{
+    img={hager_scheme.png},
+    height=6cm
 }
 
 % Description mathématique (1ère page)

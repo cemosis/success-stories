@@ -7,7 +7,9 @@
     author={Doll\'e, Guillaume},
     date={2017-05-11},
     keywords={Modelisation,FEM},
-    lang={english}
+    lang={english},
+    identifier={sivibirpp}, % shall be unique accross the database
+    version={working},
 }
 
 
@@ -32,7 +34,7 @@
 
 
 % Description du partenaire académique
-\Setup{academic/.cd,
+\SetupAcademic{
     name=cemosis,
     logo=logoCemosis.pdf,
     description={Cemosis is hosted by the Institute of Advanced Mathematical
@@ -41,7 +43,7 @@
 }
 
 % Description du partenaire industriel
-\Setup{industrial/.cd,
+\SetupIndustrial{
     name=Charier,
     logo=logoCharier.jpg,
     description = {
@@ -51,9 +53,9 @@
 
 
 % Illustration
-\Setup{
-    illustration/img={sivibirpp.png},
-    illustration/height=6cm
+\SetupIllustration{
+    img={sivibirpp.png},
+    height=6cm
 }
 
 % Description mathématique (1ère page)

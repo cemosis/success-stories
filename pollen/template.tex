@@ -1,0 +1,115 @@
+%%% À compiler *deux fois* en utilisant *lualatex* 
+%%% La fonte Arial doit être installée sur le système
+\documentclass{success_stories}
+\usepackage{mathtools}
+
+
+% Méta-données, ne sont pas affichées dans le document
+\MetaData{
+    author={Fontanges, Richard},
+    date={2017-08-04},
+    keywords={},
+    lang={english},
+    version={working},
+    identifier={pollen},
+}
+
+
+\begin{document}
+
+% Titre, résumé en une ligne, secteur H2020, 
+\Setup{
+    name=Pollen Metrology : Data fusion for Metrology,
+    oneline= Control and measurements of nanomaterials\\ by aggregation and analysis of different sources of images,
+    h2020={Health, Secure Energy}, % ??? 
+    sector={Electronics, Materials}
+}
+
+% Description du partenaire académique
+\SetupAcademic{
+    name=Laboratoire Jean Kuntzmann / Université Grenoble-Alpes,
+    logo={LJK_UGA.png},
+    description={}
+}
+
+% Description du partenaire industriel
+\SetupIndustrial{
+    name=Pollen Metrology,
+    logo=Pollen.png,
+    description = {
+POLLEN Technology is a startup founded on September 29
+Provides turnkey solutions to industrial and research laboratories in the field of nanometrology}
+}
+
+
+%Illustration
+\SetupIllustration{
+    img={illustration_pollen.png},
+   height=5cm
+}
+
+% Description mathématique (1ère page)
+\Setup{math description={
+From a selection of  images types (Scanning Electron Microscopy, Transmission Electron Microscopy, Atomic Force Microscopy), appropriate computational methods are chosen.
+As a preliminary step for classification, regions of interest are detected using SVMs technics (Support Vector Machines) and SIFT descriptors (Scale Invariant Feature Transform).
+The next step, analysis of AM-FM images of nanoparticules, has been conducted in partnership with LNE (National Laboratory of Metrology and Testing) and was the object of a PhD thesis. 
+Finaly, data fusion is applied  using a statistical approach with aggregation of estimators to obtain the wanted characteristics of the material. 
+  }}
+
+% Description du problème et du contexte
+\Setup{problem description={
+By the 2000s, nanomaterial became industrial products, thus nano-processes need to be (nano)mastered.
+This means working on high density images / huge amount of data in an efficient way, i.e automated reliable, consistent and fast analysis.
+    }}
+
+% But de la collaboration
+\Setup{goal={
+	\begin{bullets}
+	\item Getting workable images
+	\item Image analysing
+	\item Data fusionning to extract the best results
+	\end{bullets}
+The process has to be fully automated and configurable for the end-user (client).
+    }}
+
+% Résultat (2ème page)
+  \Setup{results={
+As a result, robust algorithms for preprocessing (removing of the trend, segmentation and detection of the nano-objects) have been selected and adapted. Moreover, data fusion methods have been added in a innovative way (for this sector of industry)
+\begin{bullets}
+\item Automated particle analysis	99.9\,\% success on LNE data 	
+\item Automated AFM flattening 	100\,\% success
+\item Automated Fusion: Combination of two estimators coming from multiple measurement techniques has been developed 
+\end{bullets}
+}}
+
+
+% Highlight et contribution
+\Setup{
+  highlight={
+      for  the \underline{end user}:\\
+\textbullet Higher Production Yield\\
+\textbullet Automated results (vs~manually)
+from Week to Minutes time analysis !
+
+\medskip
+
+for \underline{Pollen}:\\
+\textbullet Taking over of market share\\
+\textbullet Recognised as innovative
+          },
+    contribution={Accurate 3D process control}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\CreateStory
+
+
+
+
+
+\end{document}
+
+
+
