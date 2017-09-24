@@ -135,7 +135,7 @@ class SetupParser < ObjectParser
 	start=content.pos
 	if GroupParser.parse(content) then 
 	    content.data[key]=[] unless content.data.has_key?(key) # create a new key if it does not exists
-	    keysvalues=content[start..content.pos].compact_spaces!.remove_surrounding_brackets! # push the content, exclude nesting brackets
+	    keysvalues=content[start...content.pos].compact_spaces!.remove_surrounding_brackets! # push the content, exclude nesting brackets
 	    obj={}
 	    KeysValuesParser.parse(TeXText.new(keysvalues),obj)
 	    content.data[key] << obj
@@ -148,11 +148,12 @@ end
 
 # Detection of change of directory
 class KeyValueParser < ObjectParser
+    # @param [TeXText] content
+    # @param [Hash] object for storing keys/values
     def self.parse(content,object={})
-	ap content[content.pos..-1]
 	if %r{\s*(\w*?)\s*=\s*} === content[content.pos..-1] then 
 	    m=Regexp.last_match # store the match
-	    key=m[1] # get the key
+	    key=m[1].to_sym # get the key as a symbol
 	    content.pos+=m.end(0) # update the pointer position after the end of the match
 	    i=start=content.pos
 	    while true do 
@@ -170,7 +171,6 @@ class KeyValueParser < ObjectParser
 		    i=content.pos # after the paired bracket
 		else
 		    i+=1 # increase the pointer
-		    ap content[i]
 		end
 	    end
 	else
@@ -183,7 +183,7 @@ end
 class KeysValuesParser < ObjectParser
     def self.parse(content,object={})
 	while KeyValueParser.parse(content,object) do end
-	raise "Unexpected content while parsing keys-values: %s" %[content[content.pos..-1]] unless content.blank_from_pos?
+	raise "Unexpected content while parsing keys-values: %s" %[content.from_pos] unless content.blank_from_pos?
 	return true
     end
 end
@@ -210,13 +210,6 @@ class GroupParser < ObjectParser
 end
 
 content=TeXText.new(File.read("m4se/template.tex")).uncomment!
-
-
-
-
-
-
-
 
 MetaDataParser.parse(content)
 content.pos=0
