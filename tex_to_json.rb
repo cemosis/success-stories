@@ -12,8 +12,8 @@ class String
     end
 
     def remove_surrounding_brackets!
-	sub!(/\A{/,"")
-	sub!(/}\Z/,"")
+	sub!(/\A\s*{\s*/,"")
+	sub!(/\s*}\s*\Z/,"")
 	strip!
 	return self
     end
@@ -82,11 +82,20 @@ class TeXText < Text
 	    m=line.match(TexLineComment) # check if the whole line is commented
 	    next unless m.nil? # read the next line if the whole line is commented
 	    m=line.match(TeXComment) # match comment if any
-	    new_content << (m.nil? ? line : line.pre_match)  # keep only the pre-match
+	    new_content << (m.nil? ? line : m.pre_match)  # keep only the pre-match
 	end
 	@content=new_content.join("\n") # write the new content
 	return self
     end
+
+    def parse
+	@pos=0 # rewind
+	MetaDataParser.parse(self)
+	@pos=0 # rewind
+	while SetupParser.parse(self) do end
+	return self
+    end
+
 end
 
 # Generic class for parsing a part of a text
@@ -115,7 +124,10 @@ class MetaDataParser < ObjectParser
 	content.pos-=1 # inject the {
 	start=content.pos
 	if GroupParser.parse(content) then 
-	    content.data[:metadata]=content[start..content.pos].compact_spaces!.remove_surrounding_brackets! # push the content, exclude nesting brackets
+	    keysvalues=content[start..content.pos].compact_spaces!.remove_surrounding_brackets! # push the content, exclude nesting brackets
+	    obj={}
+	    KeysValuesParser.parse(TeXText.new(keysvalues),obj)
+	    content.data[:metadata] = obj
 	    return true
 	else
 	    raise "Non nested parenthesis while parsing MetaData."
@@ -209,13 +221,22 @@ class GroupParser < ObjectParser
 
 end
 
-content=TeXText.new(File.read("m4se/template.tex")).uncomment!
+# Read the content of the files
+data={}
+filename=nil
+ARGF.each_line do |line|
+    if filename!=ARGF.filename then 
+      filename=ARGF.filename 
+      data[filename]=""
+    end
+    data[filename] << line
+end
 
-MetaDataParser.parse(content)
-content.pos=0
-while SetupParser.parse(content) do end
+# Deal with each file
+data.each_pair do |k,v|
+    data[k]=TeXText.new(v).uncomment!.parse
+end
 
-#ap obj
 
 
 
