@@ -256,8 +256,27 @@ File.open("stories.json","w") do |file|
     file.puts result.to_json
 end
 
+# https://stackoverflow.com/questions/9647997/converting-a-nested-hash-into-a-flat-hash
+def flat_hash(h,f=[],g={})
+   return g.update({ f=>h }) unless h.is_a? Hash
+   h.each { |k,r| flat_hash(r,f+[k],g) }
+   g
+end
 
+# Flatten the hash for table generation
+table=result.to_a.inject([]) do |obj,h| # h contains an array with 2 elements. The first is the key
+    h= flat_hash({:id=>h[0]}.merge(h[1])) # add the key as id and merge with the hash
+    # Transform the keys from arrays to string
+    obj << h.to_a.inject({}) do |obj,content|
+	obj.update(content.first.join("_")=>content.last)
+    end
+end
 
+table={records:table} # embedd into a table, for adding metadata if needed
+
+File.open("stories_table.json","w") do |file|
+    file.puts table.to_json
+end
 
 
 
