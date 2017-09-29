@@ -1,0 +1,26 @@
+$amies-red: rgb(255, 67, 67);
+
+@fa-font-path:   "../fonts";
+
+
+body {
+  background-color: white;
+  color: black;
+  padding: 18vh 1rem;
+  text-align: center;
+  font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+}
+
+a {
+  color: rgba(#000, 0.7);
+
+  &:focus,
+  &:hover {
+    color: rgba(#000, 0.6);
+  }
+}
+
+.middleman-logo {
+  margin-bottom: 1rem;
+  width: 10rem;
+}
