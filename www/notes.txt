@@ -1,3 +1,5 @@
+The directory shall contains a data directory that contains
+a stories_table.json, which contains a flatten version of the data.
 
 
 

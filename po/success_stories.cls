@@ -1,1 +1,1 @@
-../success_stories.cls
+../template/success_stories.cls
