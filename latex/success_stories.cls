@@ -52,7 +52,7 @@
 %%% FONT SPECIFICATION (compile with lualatex)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{fontspec}
-\setmainfont{Franklin Gothic Book}
+\setmainfont{[FranklinGothicBook.ttf]}
 
 \newfontface\thetitlefont{Calibri}[LetterSpace=-1,WordSpace=1]
 \DeclareTextFontCommand\thetitle{\fontsize{44pt}{53pt}\selectfont\thetitlefont}
