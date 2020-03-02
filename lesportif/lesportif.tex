@@ -1,28 +1,28 @@
-%%% SUCCESS STORIES 
+%%% SUCCESS STORIES
 %%%
 %%% AMIES and FMSP, based on the Eu-Maths-In initiative
 %%%
 %%%----------------------------------------------------------------------------
 %%% TEMPLATE EXAMPLE
-%%% 
+%%%
 %%% The class file success stories as well as the proper fonts shall be installed in the appropriate directories.
 %%%
-%%% ILLUSTRATIONS 
-%%%	Each sheet is illustrated with 
+%%% ILLUSTRATIONS
+%%%	Each sheet is illustrated with
 %%%	- one picture in the front page
 %%%     - one academic logo (multiple logos must be merged into a single file)
 %%%     - one industriel logo (multiple logos must be merged into a single file)
-%%%	Various formats can be used for the pictures: .pdf, .png, .jpg. 
+%%%	Various formats can be used for the pictures: .pdf, .png, .jpg.
 %%%	Please avoid heavy (≥ 1Mb) images.
-%%% 
+%%%
 %%% Logo positionning may be tricky as there are various size. It will be fine-tuned during the production phase
 %%%
 %%% IDENTIFIER
-%%%	Each sheet is identified through a single identifier, for example the compact name of the project. 
+%%%	Each sheet is identified through a single identifier, for example the compact name of the project.
 %%%	The file is named after this identifier. It is given in the MetaData section.
 %%%
-%%% LATEX 
-%%%	The content should be typesetted using minimal LaTex features (only \emph{}, \textbf{}, \textit{}). 
+%%% LATEX
+%%%	The content should be typesetted using minimal LaTex features (only \emph{}, \textbf{}, \textit{}).
 %%%	Use the `bullet` environment of lists.
 %%%
 %%% Template version: 1.0 - 2020-01-02
@@ -34,16 +34,16 @@
 % METADATA
 %   At the exception of digital_twin and url, these metadata do not appear in the document but are useful to categorize the project.
 \MetaData{
-    author={Gouzé, Jean-Luc},  % name of the author
-    contact={Busé, Laurent}, % name of the contact at AMIES
-    date={2018-02-03}, % creation date 
+    author={Caldini-Querios, Céline},  % name of the author
+    contact={Christophe Prud'homme}, % name of the contact at AMIES
+    date={2020-03-01}, % creation date
     keywords={health}, % list of keywords
     lang={english},  % french ou english
     version={draft}, % draft or final version
-    versionno={1}, % version number 
-    identifier={exactcure}, % identifier
-    digital_twin={true}, % if true, then the Digital Twin logo will be added on the second page. 
-    url = {https://www.exactcure.com/}, % url to a page describing the project, or the society. The 'Info box' logo will be linked with this URL
+    versionno={1}, % version number
+    identifier={lesportif}, % identifier
+    digital_twin={false}, % if true, then the Digital Twin logo will be added on the second page.
+    url = {https://www.lesportif.com/}, % url to a page describing the project, or the society. The 'Info box' logo will be linked with this URL
 }
 
 
@@ -70,7 +70,7 @@
 %	-Food
 %	-Other (specify)
 %
-%   The industrial sector shall be taken among 
+%   The industrial sector shall be taken among
 %	-Agriculture and Fishing
 %	-Information and Communication Technology
 %	-Biomedicine and Health Care
@@ -88,36 +88,37 @@
 %	-Food
 %	-Other (specify)
 \Setup{
-    name={ExactCure: Your Medical Digital Twin},
-    oneline= Calibration of pharmacokinetic models of drugs and integration of patient data,
-    h2020={Health, demographic change and wellbeing}, 
-    sector={ Biomedicine and Health Care, Chemical and Pharmaceutical Industry }
+    name={LeSportif: Organise your Sport Event},
+    oneline= Organise sport event,
+    h2020={Health, demographic change and wellbeing},
+    sector={Other, Sport}
 }
 
 % ACADEMIC
 %   Description of the academic partner
 \SetupAcademic{
-    name={BIOCORE, Inria Nancy Méditerranée, France},
-    logo={inr_logo_eng_rouge.png},
-    description={BIOCORE is an Inria team at Inria Sophia Antipolis (Nice, France) with an expertise in dynamical systems and control theory, especially in the field of biomathematics.}
+    name={Cemosis, Université de Strabourg, France},
+    logo={logoCemosis.pdf},
+    description={Cemosis is the technological platform in mathematics of the University de Strasbourg}
 }
 
 
 % INDUSTRIAL
 %   Description of the industrial partner
 \SetupIndustrial{
-    name={ExactCure, Nice, France},
-    logo= {logo-exact-cure.png},
-    description = {ExactCure (Nice, France) is a eHealth company that leverages a proprietary Artificial Intelligence dedicated to personalized medicine.},
+    name={LeSportif, Molsheim, France},
+    logo= {logoLeSportif.png},
+    description = {Le-Sportif.com is an Internet portal offering services to all sports enthusiasts: competitions calendar, online registrations with secure payment, result of races, photos and videos of runners, shop,....},
 }
 
 
 % Mathematical description (front page)
 \Setup{
-    math description={
-ExactCure leverages a proprietary Artificial Intelligence to create personalized biomodels of drugs by adjusting an ideal posology and tightly monitoring the therapy. 
+  math description={
+    \textbf{Math description}
+      ExactCure leverages a proprietary Artificial Intelligence to create personalized biomodels of drugs by adjusting an ideal posology and tightly monitoring the therapy.
 
-Pharmacokinetic models reflect the fate of a drug in an organism, from
+      Pharmacokinetic models reflect the fate of a drug in an organism, from
 absorption to distribution, metabolism and elimination. They are systems of
 Ordinary Differential Equations. Their dynamics is calibrated on populations of
 patients thanks to clinical trials. Their parameters are random variables that
@@ -129,11 +130,11 @@ systems and control theory in the context of pharmacokinetics modelling.
 % Problem and context description (front page)
 \Setup{
     problem description={
-Inappropriate medications kill more people than car accidents do! 3 times more, 
-costing France 10 billion euros of health insurance per year. 
+Inappropriate medications kill more people than car accidents do! 3 times more,
+costing France 10 billion euros of health insurance per year.
 Why is it so complex? We are all different, we differently respond to drugs.
     }}
-  
+
 % Goal of the collaboration (front page)
 \Setup{goal={
 	\begin{bullets}
@@ -146,16 +147,16 @@ Why is it so complex? We are all different, we differently respond to drugs.
 
 % Illustration (front page)
 \SetupIllustration{
-    img={image-exact-cure.pdf},
+    img={image-blog.png},
     height=6cm,  % Height of the image.
-   legend={Interface for your digital twin},
+    legend={Trek event},
 }
 
 % Results (back page)
   \Setup{
       results={
-In pharmacokinetics modelling, personalization means to estime/adjust kinetic parameters from personnalized data. 
-We have developed cutting-edge technologies for rigorous and smart integration of such personalized data in our proprietary calibration pipeline. The underlying mathematical techniques form the cornerstone of very challenging collaborations between ExactCure and Inria.   
+In pharmacokinetics modelling, personalization means to estime/adjust kinetic parameters from personnalized data.
+We have developed cutting-edge technologies for rigorous and smart integration of such personalized data in our proprietary calibration pipeline. The underlying mathematical techniques form the cornerstone of very challenging collaborations between ExactCure and Inria.
 }}
 
 
@@ -163,12 +164,12 @@ We have developed cutting-edge technologies for rigorous and smart integration o
 % Highlights and contribution (back page)
 \Setup{
   highlight={
-      A significant advancement in our core\\ calculation algorithms which 
+      A significant advancement in our core\\ calculation algorithms which
       opens the way to a best-in-class
       \Impact{personalization} algorithm for
       patients.
   },
-    contribution={Personalized\\ Biomodeling of Drugs}
+    contribution={Personalized\\ Sport Event Organisation}
 }
 
 % Here we are!
@@ -177,3 +178,9 @@ We have developed cutting-edge technologies for rigorous and smart integration o
 \end{document}
 %%%
 %%% END OF THE TEMPLATE FILE
+%%
+%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% TeX-engine: luatex
+%%% End:
